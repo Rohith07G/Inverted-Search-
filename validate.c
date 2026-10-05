@@ -48,6 +48,20 @@ int insert_at_last(Slist **head,char *file)         // Function to insert file a
     return SUCCESS; 
 }
 
+int duplicate(Slist *head, char *filename)
+{
+    while (head != NULL)
+    {
+        if (strcmp(head->file, filename) == 0)
+        {
+            return FAILURE;
+        }
+
+        head = head->link;
+    }
+
+    return SUCCESS;
+}
 
 
 

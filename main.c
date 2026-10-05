@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
 
     for(int i = 1; i < argc; i++)
     {
-        if(extension(argv[i]) == FAILURE)
-        {
-            continue;
-        }
+        // if(extension(argv[i]) == FAILURE)
+        // {
+        //     continue;
+        // }
 
         if(empty(argv[i]) == FAILURE)
         {

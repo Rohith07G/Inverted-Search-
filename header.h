@@ -39,6 +39,10 @@ typedef struct main         // Structure definition for main node (stores word i
 
 int create_database(Slist*head,main_node* hash_table[]);
 int display_database(main_node* hash_table[]); 
+void print_list(Slist *head); 
+int empty(char*filename);  
+int insert_at_last(Slist **head,char *file); 
+int duplicate(Slist *head,char *filename); 
 
 
 
