@@ -178,9 +178,7 @@ int create_database(Slist *head, main_node *hash_table[])
                 char word[100];
                 int idx = 0;
 
-                while (*ptr != '\0' &&
-                       isalnum((unsigned char)*ptr) &&
-                       idx < 99)
+                while (*ptr != '\0' &&  isalnum((unsigned char)*ptr) && idx < 99)
                 {
                     word[idx++] = *ptr;
                     ptr++;

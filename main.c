@@ -1,7 +1,7 @@
 
 #include "header.h"
 
-main_node *hash_table[27]; // Global hash table array with 27 indices (a-z + non-alphabetic)
+main_node *hash_table[27]; 
 
 int main(int argc, char* argv[])
 {
@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
 
     for(int i = 1; i < argc; i++)
     {
-        // if(extension(argv[i]) == FAILURE)
-        // {
-        //     continue;
-        // }
+        if(extension(argv[i]) == FAILURE)
+        {
+            continue;
+        }
 
         if(empty(argv[i]) == FAILURE)
         {
@@ -90,8 +90,84 @@ int main(int argc, char* argv[])
                 }
                 break;
             
-        }
+            
+            case 3:
+            {
+                char str1[10];
+                printf("Enter file name : ");
+                scanf("%s", str1);
 
-           
+                if(extension(str1) == FAILURE)
+                {
+                    continue;
+                }
+
+                if(flag == 1)
+                {
+                    printf("\n⚠ WARNING: Database creation completed. Update not possible!\n");
+                }
+                else if(count == 1)
+                {
+                    printf("\n⚠ WARNING: Database update already completed!\n");
+                }
+                else
+                {
+                    count = 1;
+                    if(update_database(&head, hash_table, str1) == SUCCESS)
+                    {
+                        printf("\n✓ Data updated successfully\n");
+                    }
+                    else
+                    {
+                        printf("\n✗ Data not updated\n");
+                    }
+                }
+                break;
+            }
+
+            case 4:
+                if(search_database(hash_table) == SUCCESS)
+                {
+                    printf("\n✓ Search completed successfully\n");
+                }
+                else
+                {
+                    printf("\n✗ Word not found in database\n");
+                }
+                break;
+
+            case 5:
+            {
+                char str[10];
+                printf("Enter file name : ");
+                scanf("%s", str);
+
+                if(extension(str) == FAILURE)
+                {
+                    continue;
+                }
+
+                if(save_database(hash_table, str) == SUCCESS)
+                {
+                    printf("\n✓ SUCCESS: Database saved to %s successfully!\n", str);
+                }
+                else
+                {
+                    printf("\n✗ FAILURE: Database not saved!\n");
+                }
+                break;
+            }
+
+            case 6:
+                printf("\nThank you for using Inverted Search Engine!\n");
+                printf("Exiting...\n\n");
+                return SUCCESS;
+
+            default:
+                printf("\n✗ ERROR: Invalid option! Please try again.\n");
+                break;
+        }
     }
 }
+
+            

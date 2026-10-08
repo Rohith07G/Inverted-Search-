@@ -1,51 +1,60 @@
 #include "header.h"
 
-
-
-
-
-int empty(char*filename)                                    // Function to check if file is empty
+int extension(char *filename)
 {
-    FILE *fp=fopen(filename,"r");                           
-    if(fp==NULL)                                            // Check if file opening failed
-    {
-        printf("ERROR: Cannot open file %s\n",filename);    
-        return FAILURE;
-    }
+    char *ext = strstr(filename, ".");
 
-    fseek(fp,0,SEEK_END);                                   // Move file pointer to end of file
-    if(ftell(fp) != 0 )                                     // Check if file size is zero
+    if (ext != NULL && strcmp(ext, ".txt") == 0)
     {
-        fseek(fp, 0, SEEK_SET );
         return SUCCESS;
     }
-    printf("ERROR: No content present in file %s\n",filename);
+    else
+    {
+        printf("File %s is not a .txt file\n", filename);
+        return FAILURE;
+    }
+}
+
+int empty(char *filename)
+{
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL)
+    {
+        printf("ERROR: Cannot open file %s\n", filename);
+        return FAILURE;
+    }
+    fseek(fp, 0, SEEK_END);
+    if (ftell(fp) != 0)
+    {
+        fseek(fp, 0, SEEK_SET);
+        return SUCCESS;
+    }
+    printf("ERROR: No content present in file %s\n", filename);
     return FAILURE;
 }
 
-
-
-int insert_at_last(Slist **head,char *file)         // Function to insert file at end of linked list
+int insert_at_last(Slist **head, char *file)
 {
-    Slist *new=malloc(sizeof(Slist));               
-    if(new==NULL)                                   
+    Slist *new = malloc(sizeof(Slist));
+    if (new == NULL)
     {
-        return FAILURE; 
+        return FAILURE;
     }
-    strcpy(new->file,file);                         // Copy filename to new node
-    new->link=NULL;                                 // Set link to NULL
-    if(*head==NULL)                                 // Check if list is empty
+
+    strcpy(new->file, file);
+    new->link = NULL;
+    if (*head == NULL)
     {
-        *head=new;                                  // Set head to new node
-        return SUCCESS; 
+        *head = new;
+        return SUCCESS;
     }
-    Slist *temp=*head;                              // Start from head
-    while(temp->link!=NULL)                         // Traverse to last node
+    Slist *temp = *head;
+    while (temp->link != NULL)
     {
-        temp=temp->link;                            // Move to next node
+        temp = temp->link;
     }
-    temp->link=new;                                 // Link new node to last node
-    return SUCCESS; 
+    temp->link = new;
+    return SUCCESS;
 }
 
 int duplicate(Slist *head, char *filename)
@@ -56,53 +65,48 @@ int duplicate(Slist *head, char *filename)
         {
             return FAILURE;
         }
-
         head = head->link;
     }
-
     return SUCCESS;
 }
 
-
-
-
-
-
-void print_list(Slist *head)            // Function to print file list
+void print_list(Slist *head)
 {
-    if (head == NULL)                   // Check if list is empty
+    if (head == NULL)
     {
-        printf("List is empty\n");      
-        return;                
+        printf("List is empty\n");
+        return;
     }
 
-    size_t max_len = 0; // Variable to store maximum filename length
-    Slist *temp = head; // Start from head
-    while (temp != NULL) 
+    size_t max_len = 0;
+    Slist *temp = head;
+
+    while (temp != NULL)
     {
-        size_t len = strlen(temp->file); // Get length of current filename
-        if (len > max_len) // Check if current length is greater
+        size_t len = strlen(temp->file);
+        if (len > max_len)
         {
-            max_len = len; // Update maximum length
+            max_len = len;
         }
-        temp = temp->link; // Move to next node
+        temp = temp->link;
     }
-    
-   
-    if (max_len < 8) max_len = 8; // Minimum filename column width
-    
-    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"); // Print separator
-    printf("              FILES CURRENTLY IN THE LIST\n"); // Print header
-    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"); // Print separator
-    printf("  No. │  %-*s\n", (int)max_len, "File Name"); // Print column headers
-    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"); // Print separator
 
-    int index = 1; // Initialize index counter
-    temp = head; // Start from head
-    while (temp != NULL) // Traverse through list
+    if (max_len < 8)
+        max_len = 8;
+
+    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+    printf("              FILES CURRENTLY IN THE LIST\n");
+    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+    printf("  No. │  %-*s\n", (int)max_len, "File Name");
+    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
+    int index = 1;
+    temp = head;
+
+    while (temp != NULL)
     {
-        printf("  %-3d │  %-*s\n", index++, (int)max_len, temp->file); // Print file entry with index
-        temp = temp->link; // Move to next node
+        printf("  %-3d │  %-*s\n", index++, (int)max_len, temp->file);
+        temp = temp->link;
     }
     printf("\n");
 }

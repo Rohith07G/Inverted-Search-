@@ -43,7 +43,11 @@ void print_list(Slist *head);
 int empty(char*filename);  
 int insert_at_last(Slist **head,char *file); 
 int duplicate(Slist *head,char *filename); 
-
-
+int extension(char*filename); 
+int save_database(main_node* hash_table[],char *file); 
+int search_database(main_node* hash_table[]); 
+int update_database(Slist **head, main_node *hash_table[], char *file); 
+void delete_file_from_list(Slist **head,  char *filename); 
+int hash_function( char *word); 
 
 #endif
